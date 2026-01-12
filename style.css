@@ -130,7 +130,7 @@ nav a {
 
 .nav-wrapper {
   position: sticky;
-  top: 20px;
+  top: 16px;
   z-index: 1000;
 
   display: flex;
@@ -363,6 +363,39 @@ footer p {
     flex-direction: column;
     text-align: center;
   }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: nowrap;          /* ❗ force one line */
+    overflow-x: auto;           /* enable horizontal scroll */
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 10px 16px;
+
+    -webkit-overflow-scrolling: touch; /* smooth mobile scroll */
+  }
+
+  .hero-buttons a {
+    white-space: nowrap;        /* prevent text breaking */
+    flex-shrink: 0;             /* prevent shrinking */
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  section {
+    margin: 20px 16px;   /* space from screen edges */
+    padding: 22px 18px;  /* inner breathing space */
+    border-radius: 16px;
+  }
+
+  section p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
 }
 
 /* ===== BUTTON HOVER ANIMATIONS (FINAL) ===== */
@@ -391,3 +424,72 @@ footer p {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
+/* ================= MOBILE SWIPE CHATGPT STYLE ================= */
+@media (max-width: 768px) {
+
+  /* hide desktop nav on mobile */
+  .nav-wrapper {
+    display: none;
+  }
+
+  .mobile-swipe-nav {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+
+    background: rgba(20, 30, 36, 0.98);
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 70px 20px;
+
+    transition: left 0.35s ease;
+    z-index: 2000;
+  }
+
+  .mobile-swipe-nav.open {
+    left: 0;
+  }
+
+  .mobile-swipe-nav a {
+    color: #ffffff;
+    text-decoration: none;
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    text-align: left; /* ChatGPT style */
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .mobile-swipe-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1500;
+  }
+
+  .mobile-swipe-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* desktop safety */
+@media (min-width: 769px) {
+  .mobile-swipe-nav,
+  .mobile-swipe-overlay {
+    display: none;
+  }
+}
