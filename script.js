@@ -145,3 +145,6 @@ if (swipeNav && swipeOverlay) {
     });
   });
 }
+
+alert("swipe detected");
+
