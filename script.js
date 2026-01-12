@@ -1,4 +1,5 @@
 console.log("JavaScript connected!");
+alert("JS LOADED");
 
 const form = document.getElementById("contactForm");
 const button = document.getElementById("submitBtn");
@@ -147,4 +148,5 @@ if (swipeNav && swipeOverlay) {
 }
 
 alert("swipe detected");
+
 
