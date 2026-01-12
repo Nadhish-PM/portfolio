@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nadhish's Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +14,8 @@
     <p>Computer Science Engineering Student</p>
 </header>
 
-    <div class="nav-wrapper">
+    <div class="nav-wrapper mobile-drawer">
+      <div class="drawer-overlay"></div>
       <div class="hero-buttons">
         <a href="#about" class="btn secondary">About Me</a>
         <a href="#skills" class="btn secondary">My Skills</a>
@@ -113,6 +116,16 @@
 </footer>
 
 <script src="script.js"></script>
+
+<!-- MOBILE SWIPE NAV -->
+<div class="mobile-swipe-nav">
+  <a href="#about">About Me</a>
+  <a href="#skills">My Skills</a>
+  <a href="#projects">View Projects</a>
+  <a href="#contact">Contact Me</a>
+</div>
+
+<div class="mobile-swipe-overlay"></div>
 
 </body>
 </html>
