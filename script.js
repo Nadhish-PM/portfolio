@@ -105,12 +105,12 @@ window.addEventListener('scroll', () => {
   lastScrollY = currentScrollY;
 });
 
-// ===== MOBILE SWIPE NAV (CHATGPT STYLE) =====
-if (window.innerWidth <= 768) {
+// ===== MOBILE SWIPE NAV (FIXED) =====
+let startX = 0;
+const swipeNav = document.querySelector('.mobile-swipe-nav');
+const swipeOverlay = document.querySelector('.mobile-swipe-overlay');
 
-  let startX = 0;
-  const swipeNav = document.querySelector('.mobile-swipe-nav');
-  const swipeOverlay = document.querySelector('.mobile-swipe-overlay');
+if (swipeNav && swipeOverlay) {
 
   document.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
@@ -118,27 +118,26 @@ if (window.innerWidth <= 768) {
 
   document.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
+    const diffX = endX - startX;
 
-    // swipe from left edge to open
-    if (startX < 40 && endX - startX > 60) {
+    // swipe right (open)
+    if (startX < 50 && diffX > 70) {
       swipeNav.classList.add('open');
       swipeOverlay.classList.add('show');
     }
 
-    // swipe left to close
-    if (startX > 200 && startX - endX > 60) {
+    // swipe left (close)
+    if (diffX < -70) {
       swipeNav.classList.remove('open');
       swipeOverlay.classList.remove('show');
     }
   });
 
-  // tap outside to close
   swipeOverlay.addEventListener('click', () => {
     swipeNav.classList.remove('open');
     swipeOverlay.classList.remove('show');
   });
 
-  // close after clicking a link
   swipeNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       swipeNav.classList.remove('open');
