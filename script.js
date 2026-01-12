@@ -105,55 +105,39 @@ window.addEventListener('scroll', () => {
   lastScrollY = currentScrollY;
 });
 
-// ===== FINAL MOBILE SWIPE NAV (STABLE) =====
-let startX = null;
-let startY = null;
-let isTouching = false;
+// ===== MOBILE SWIPE NAV (EDGE-BASED, STABLE) =====
+let startX = 0;
+let startY = 0;
 
+const swipeEdge = document.querySelector('.swipe-edge');
 const swipeNav = document.querySelector('.mobile-swipe-nav');
 const swipeOverlay = document.querySelector('.mobile-swipe-overlay');
 
-if (swipeNav && swipeOverlay) {
+if (swipeEdge && swipeNav && swipeOverlay) {
 
-  document.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1) return;
-
+  swipeEdge.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-    isTouching = true;
   }, { passive: true });
 
-  document.addEventListener('touchmove', (e) => {
-    if (!isTouching) return;
-  }, { passive: true });
-
-  document.addEventListener('touchend', (e) => {
-    if (!isTouching) return;
-
+  swipeEdge.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
     const endY = e.changedTouches[0].clientY;
 
     const diffX = endX - startX;
     const diffY = Math.abs(endY - startY);
 
-    isTouching = false;
+    // ignore vertical scroll
+    if (diffY > 60) return;
 
-    // Ignore vertical scrolls
-    if (diffY > 80) return;
-
-    // Open: swipe right from left edge
-    if (startX < 40 && diffX > 100) {
+    // open drawer
+    if (diffX > 70) {
       swipeNav.classList.add('open');
       swipeOverlay.classList.add('show');
     }
-
-    // Close: swipe left
-    if (diffX < -100) {
-      swipeNav.classList.remove('open');
-      swipeOverlay.classList.remove('show');
-    }
   });
 
+  // close logic
   swipeOverlay.addEventListener('click', () => {
     swipeNav.classList.remove('open');
     swipeOverlay.classList.remove('show');
@@ -166,7 +150,6 @@ if (swipeNav && swipeOverlay) {
     });
   });
 }
-
 
 
 
