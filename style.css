@@ -523,4 +523,19 @@ footer p {
     border-radius: 14px;
   }
 }
+/* ===== MOBILE SWIPE EDGE ===== */
+@media (max-width: 768px) {
+
+  .swipe-edge {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;          /* swipe detection zone */
+    height: 100vh;
+    z-index: 3000;
+    background: transparent;
+  }
+
+}
+
 
