@@ -1,6 +1,4 @@
 console.log("JavaScript connected!");
-alert("JS LOADED");
-document.body.style.border = "5px solid red";
 
 const form = document.getElementById("contactForm");
 const button = document.getElementById("submitBtn");
@@ -107,29 +105,50 @@ window.addEventListener('scroll', () => {
   lastScrollY = currentScrollY;
 });
 
-// ===== MOBILE SWIPE NAV (FIXED) =====
-let startX = 0;
+// ===== FINAL MOBILE SWIPE NAV (STABLE) =====
+let startX = null;
+let startY = null;
+let isTouching = false;
+
 const swipeNav = document.querySelector('.mobile-swipe-nav');
 const swipeOverlay = document.querySelector('.mobile-swipe-overlay');
 
 if (swipeNav && swipeOverlay) {
 
   document.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+
     startX = e.touches[0].clientX;
-  });
+    startY = e.touches[0].clientY;
+    isTouching = true;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!isTouching) return;
+  }, { passive: true });
 
   document.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diffX = endX - startX;
+    if (!isTouching) return;
 
-    // swipe right (open)
-    if (startX < 50 && diffX > 70) {
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+
+    const diffX = endX - startX;
+    const diffY = Math.abs(endY - startY);
+
+    isTouching = false;
+
+    // Ignore vertical scrolls
+    if (diffY > 80) return;
+
+    // Open: swipe right from left edge
+    if (startX < 40 && diffX > 100) {
       swipeNav.classList.add('open');
       swipeOverlay.classList.add('show');
     }
 
-    // swipe left (close)
-    if (diffX < -70) {
+    // Close: swipe left
+    if (diffX < -100) {
       swipeNav.classList.remove('open');
       swipeOverlay.classList.remove('show');
     }
@@ -148,7 +167,7 @@ if (swipeNav && swipeOverlay) {
   });
 }
 
-alert("swipe detected");
+
 
 
 
