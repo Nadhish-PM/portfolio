@@ -104,3 +104,45 @@ window.addEventListener('scroll', () => {
 
   lastScrollY = currentScrollY;
 });
+
+// ===== MOBILE SWIPE NAV (CHATGPT STYLE) =====
+if (window.innerWidth <= 768) {
+
+  let startX = 0;
+  const swipeNav = document.querySelector('.mobile-swipe-nav');
+  const swipeOverlay = document.querySelector('.mobile-swipe-overlay');
+
+  document.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  document.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+
+    // swipe from left edge to open
+    if (startX < 40 && endX - startX > 60) {
+      swipeNav.classList.add('open');
+      swipeOverlay.classList.add('show');
+    }
+
+    // swipe left to close
+    if (startX > 200 && startX - endX > 60) {
+      swipeNav.classList.remove('open');
+      swipeOverlay.classList.remove('show');
+    }
+  });
+
+  // tap outside to close
+  swipeOverlay.addEventListener('click', () => {
+    swipeNav.classList.remove('open');
+    swipeOverlay.classList.remove('show');
+  });
+
+  // close after clicking a link
+  swipeNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      swipeNav.classList.remove('open');
+      swipeOverlay.classList.remove('show');
+    });
+  });
+}
